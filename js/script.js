@@ -11,37 +11,32 @@
 
   let savedSelections = { "persons": [] };
 
-  //let o = [{ "date": "date", "person":[{ "name": "name" , "selections":["date"]}] }];
-
   function saveSelections() {
     const name = document.querySelector("#name").value;
     const checkboxes = document.querySelectorAll(".selection");
-    let personExists = false;
-    savedSelections.persons.forEach(function(person) {
-      if(person.name===name) {
-        personExists=true;
-        person.selectedTimes=[];
+    let person = savedSelections.persons.find(person => person.name === name);
+    if (person) {
+      person.selectedTimes = [];
+    } else {
+      person = { "name": name, "selectedTimes": [] };
+    }
+
+    checkboxes.forEach(function (checkbox) {
+      let checkboxId = checkbox.id;
+      let obj = new Object();
+      if (checkbox.checked === true) {
+        obj[checkboxId] = true;
+        person.selectedTimes.push(obj);
+      }
+      else {
+        obj[checkboxId] = false;
+        person.selectedTimes.push(obj);
       }
     }, this);
-    if(!personExists) {
-      savedSelections.persons.push({ "name": name, "selectedTimes": [] });
-    } 
-    savedSelections.persons.forEach(function (person) {
-      if (person.name === name) {
-        checkboxes.forEach(function (checkbox) {
-          let checkboxId = checkbox.id;
-          let obj = new Object();
-          if (checkbox.checked === true) {
-            obj[checkboxId] = true;
-            person.selectedTimes.push(obj);
-          }
-          else {
-            obj[checkboxId] = false;
-            person.selectedTimes.push(obj);
-          }
-        }, this);
-      }
-    });
+
+    savedSelections.persons=savedSelections.persons.filter(person=>person.name!==name);
+    savedSelections.persons.push(person);
+
     console.log(savedSelections.persons);
 
     document.querySelector("#name").value = "";
