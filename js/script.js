@@ -14,16 +14,16 @@
   //let o = [{ "date": "date", "person":[{ "name": "name" , "selections":["date"]}] }];
 
   function saveSelections() {
-    let name = document.querySelector("#name").value;
-    let checkboxes = document.querySelectorAll(".selection");
-    let check = false;
+    const name = document.querySelector("#name").value;
+    const checkboxes = document.querySelectorAll(".selection");
+    let personExists = false;
     savedSelections.persons.forEach(function(person) {
       if(person.name===name) {
-        check=true;
+        personExists=true;
         person.selectedTimes=[];
       }
     }, this);
-    if(!check) {
+    if(!personExists) {
       savedSelections.persons.push({ "name": name, "selectedTimes": [] });
     } 
     savedSelections.persons.forEach(function (person) {
