@@ -1,0 +1,7 @@
+ul {
+  white-space:nowrap;
+}
+li {
+  display: inline;
+  padding: 0.4em;
+}
