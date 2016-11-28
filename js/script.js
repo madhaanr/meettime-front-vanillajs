@@ -14,12 +14,7 @@
   function saveSelections() {
     const name = document.querySelector("#name").value;
     const checkboxes = document.querySelectorAll(".selection");
-    let person = savedSelections.persons.find(person => person.name === name);
-    if (person) {
-      person.selectedTimes = [];
-    } else {
-      person = { "name": name, "selectedTimes": [] };
-    }
+    let person = { "name": name, "selectedTimes": [] };
 
     checkboxes.forEach(function (checkbox) {
       let checkboxId = checkbox.id;
@@ -34,11 +29,14 @@
       }
     }, this);
 
-    savedSelections.persons=savedSelections.persons.filter(person=>person.name!==name);
+    savedSelections.persons = savedSelections.persons.filter(person => person.name !== name);
     savedSelections.persons.push(person);
 
     console.log(savedSelections.persons);
+    clearInputFields(checkboxes);
+  }
 
+  function clearInputFields(checkboxes) {
     document.querySelector("#name").value = "";
     for (let i = 0; i < checkboxes.length; ++i) {
       document.querySelectorAll(".selection")[i].checked = false;
