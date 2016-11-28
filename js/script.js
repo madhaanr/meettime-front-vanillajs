@@ -36,11 +36,10 @@
     clearInputFields(checkboxes);
   }
 
-  function clearInputFields(checkboxes) {
-    document.querySelector("#name").value = "";
-    for (let i = 0; i < checkboxes.length; ++i) {
-      document.querySelectorAll(".selection")[i].checked = false;
-    };
+  function showReservations() {
+    savedSelections.persons.forEach(person => {
+
+    });
   }
 
   function makeCheckBoxes() {
@@ -77,8 +76,8 @@
     if (!date) {
       return;
     }
-    let ul = document.querySelector("#dates");
-    let li = document.createElement("li");
+    const ul = document.querySelector("#dates");
+    const li = document.createElement("li");
     li.appendChild(document.createTextNode(date.toLocaleDateString() + " " + date.toLocaleTimeString()));
     ul.appendChild(li);
   }
@@ -93,6 +92,13 @@
     addDateToList(date);
   }
 
+  function clearInputFields(checkboxes) {
+    document.querySelector("#name").value = "";
+    for (let i = 0; i < checkboxes.length; ++i) {
+      document.querySelectorAll(".selection")[i].checked = false;
+    };
+  }
+  //event listeners
   document.addEventListener("DOMContentLoaded", function (e) {
     listDates();
     makeCheckBoxes();
