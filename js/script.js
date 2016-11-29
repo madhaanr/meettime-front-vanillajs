@@ -14,11 +14,11 @@
   function saveSelections() {
     const name = document.querySelector("#name").value;
     const checkboxes = document.querySelectorAll(".selection");
-    let person = { "name": name, "selectedTimes": [] };
+    const person = { "name": name, "selectedTimes": [] };
 
     checkboxes.forEach(function (checkbox) {
-      let checkboxId = checkbox.id;
-      let obj = new Object();
+      const checkboxId = checkbox.id;
+      const obj = new Object();
       if (checkbox.checked === true) {
         obj[checkboxId] = true;
         person.selectedTimes.push(obj);
@@ -34,32 +34,45 @@
 
     console.log(savedSelections.persons);
     clearInputFields(checkboxes);
+    showReservations(name);
   }
 
-  function showReservations() {
-    savedSelections.persons.forEach(person => {
-
+  function showReservations(name) {
+    const ul=document.querySelector("#selectedTimes"); 
+    while(ul.firstChild) {
+      ul.removeChild(ul.firstChild);
+    }
+    savedSelections.persons.forEach((person) => {
+      const li = document.createElement("li");
+      li.id=person.name;
+      let selectedTimes = "";
+      person.selectedTimes.forEach(time => {
+        selectedTimes+=Object.keys(time)[0]+" "+time[Object.keys(time)[0]]+" : ";
+        console.log(time);
+      });
+      li.appendChild(document.createTextNode(person.name+" "+selectedTimes));
+      ul.appendChild(li);
     });
   }
 
   function makeCheckBoxes() {
-    let form = document.querySelector("#selectTimes");
+    const form = document.querySelector("#selectTimes");
     if (!form) {
       return;
     }
-    let name = document.createElement("input");
+    const name = document.createElement("input");
     name.type = "text";
     name.id = "name";
     form.appendChild(name);
     for (let i = 0; i < timesList.length; ++i) {
-      let checkbox = document.createElement("input");
+      const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.id = timesList[i];
       checkbox.className = "selection";
       checkbox.name = "checkbox " + i;
       form.appendChild(checkbox);
     }
-    let submit = document.createElement("input");
+    const submit = document.createElement("input");
     submit.type = "button";
     submit.value = "save";
     submit.id = "saveSelected";
@@ -72,6 +85,16 @@
     }, this);
   }
 
+  function addDate() {
+    const date = new Date(document.querySelector("#date").value);
+    if (!date) {
+      return;
+    }
+    timesList.push(date);
+    document.querySelector("#date").value = "";
+    addDateToList(date);
+  }
+
   function addDateToList(date) {
     if (!date) {
       return;
@@ -80,17 +103,7 @@
     const li = document.createElement("li");
     li.appendChild(document.createTextNode(date.toLocaleDateString() + " " + date.toLocaleTimeString()));
     ul.appendChild(li);
-  }
-
-  function addDate() {
-    let date = new Date(document.querySelector("#date").value);
-    if (!date) {
-      return;
-    }
-    timesList.push(date);
-    document.querySelector("#date").value = "";
-    addDateToList(date);
-  }
+  } 
 
   function clearInputFields(checkboxes) {
     document.querySelector("#name").value = "";

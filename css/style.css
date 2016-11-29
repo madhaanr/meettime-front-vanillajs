@@ -1,7 +1,11 @@
 ul {
   white-space:nowrap;
 }
-li {
+#dates li {
   display: inline;
   padding: 0.4em;
+}
+
+#selectedTimes li {
+  padding: 0.2em;
 }
