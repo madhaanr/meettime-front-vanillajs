@@ -12,9 +12,10 @@
   let savedSelections = { "persons": [] };
 
   function saveSelections() {
+    const personId = "a" + randomId();
     const name = document.querySelector("#name").value;
     const checkboxes = document.querySelectorAll(".selection");
-    const person = { "name": name, "selectedTimes": [] };
+    const person = { "id": personId, "name": name, "selectedTimes": [] };
 
     checkboxes.forEach(function (checkbox) {
       const checkboxId = checkbox.id;
@@ -29,30 +30,24 @@
       }
     }, this);
 
-    savedSelections.persons = savedSelections.persons.filter(person => person.name !== name);
+    savedSelections.persons = savedSelections.persons.filter(person => person.id !== personId);
     savedSelections.persons.push(person);
 
     console.log(savedSelections.persons);
     clearInputFields(checkboxes);
-    showReservations(name);
+    showReservations(person);
   }
 
-  function showReservations(name) {
-    const ul=document.querySelector("#selectedTimes"); 
-    while(ul.firstChild) {
-      ul.removeChild(ul.firstChild);
-    }
-    savedSelections.persons.forEach((person) => {
-      const li = document.createElement("li");
-      li.id=person.name;
-      let selectedTimes = "";
-      person.selectedTimes.forEach(time => {
-        selectedTimes+=Object.keys(time)[0]+" "+time[Object.keys(time)[0]]+" : ";
-        console.log(time);
-      });
-      li.appendChild(document.createTextNode(person.name+" "+selectedTimes));
-      ul.appendChild(li);
+  function showReservations(person) {
+    const ul = document.querySelector("#selectedTimes");
+    const li = document.createElement("li");
+    li.id = person.id;
+    let selectedTimes = "";
+    person.selectedTimes.forEach(time => {
+      selectedTimes += Object.keys(time)[0] + " " + time[Object.keys(time)[0]] + " : ";
     });
+    li.appendChild(document.createTextNode(person.name + " " + selectedTimes));
+    ul.appendChild(li);
   }
 
   function makeCheckBoxes() {
@@ -103,13 +98,17 @@
     const li = document.createElement("li");
     li.appendChild(document.createTextNode(date.toLocaleDateString() + " " + date.toLocaleTimeString()));
     ul.appendChild(li);
-  } 
+  }
 
   function clearInputFields(checkboxes) {
     document.querySelector("#name").value = "";
     for (let i = 0; i < checkboxes.length; ++i) {
       document.querySelectorAll(".selection")[i].checked = false;
     };
+  }
+
+  function randomId() {
+    return Math.random().toString(36).substr(2, 10);
   }
   //event listeners
   document.addEventListener("DOMContentLoaded", function (e) {
