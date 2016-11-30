@@ -40,13 +40,40 @@
   function showReservation(person) {
     const ul = document.querySelector("#selectedTimes");
     const li = document.createElement("li");
-    li.id = person.id;
-    let selectedTimes = "";
-    person.selectedTimes.forEach(time => {
-      selectedTimes += Object.keys(time)[0] + " " + time[Object.keys(time)[0]] + " : ";
+    const form = document.createElement("form");
+    const name = document.createElement("input");
+    name.type = "text";
+    name.id = "name";
+    name.value = person.name;
+    form.appendChild(name);
+    //form.id = "edit_" + person.id;
+    person.selectedTimes.forEach((time, i) => {
+      const label = document.createElement("label");
+      label.appendChild(document.createTextNode(Object.keys(time)[0]));
+      form.appendChild(label);
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.id = timesList[i];
+      checkbox.className = "selection";
+      checkbox.name = "checkbox " + i;
+      checkbox.checked = time[Object.keys(time)[0]];
+      form.appendChild(checkbox);
+      //Object.keys(time)[0] + " " + time[Object.keys(time)[0]] + " : ";
     });
-    li.appendChild(document.createTextNode(person.name + " " + selectedTimes));
+    const submit = document.createElement("input");
+    submit.type = "button";
+    submit.value = "edit";
+    submit.id = "edit_"+person.id;
+    form.appendChild(submit);
+    li.appendChild(form);
     ul.appendChild(li);
+    document.getElementById("edit_" + person.id).addEventListener("click", function (e) {
+      editSelected();
+    });
+  }
+
+  function editReservation() {
+
   }
 
   function makeCheckBoxes() {
