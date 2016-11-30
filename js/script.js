@@ -14,9 +14,8 @@
   function saveSelections() {
     const personId = "a" + randomId();
     const name = document.querySelector("#name").value;
-    const checkboxes = document.querySelectorAll(".selection");
     const person = { "id": personId, "name": name, "selectedTimes": [] };
-
+    const checkboxes = document.querySelectorAll(".selection");
     checkboxes.forEach(function (checkbox) {
       const checkboxId = checkbox.id;
       const obj = new Object();
@@ -35,10 +34,10 @@
 
     console.log(savedSelections.persons);
     clearInputFields(checkboxes);
-    showReservations(person);
+    showReservation(person);
   }
 
-  function showReservations(person) {
+  function showReservation(person) {
     const ul = document.querySelector("#selectedTimes");
     const li = document.createElement("li");
     li.id = person.id;
