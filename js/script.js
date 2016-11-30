@@ -1,5 +1,5 @@
-"use strict";
 (function () {
+  "use strict";
   let timesList = [
     new Date(2016, 4, 31, 10, 0),
     new Date(2016, 4, 31, 11, 0),
@@ -43,7 +43,7 @@
     const form = document.createElement("form");
     const name = document.createElement("input");
     name.type = "text";
-    name.id = "name";
+    name.id = person.id;
     name.value = person.name;
     form.appendChild(name);
     //form.id = "edit_" + person.id;
@@ -54,25 +54,37 @@
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.id = timesList[i];
-      checkbox.className = "selection";
+      checkbox.className = person.id;
       checkbox.name = "checkbox " + i;
       checkbox.checked = time[Object.keys(time)[0]];
       form.appendChild(checkbox);
       //Object.keys(time)[0] + " " + time[Object.keys(time)[0]] + " : ";
     });
-    const submit = document.createElement("input");
-    submit.type = "button";
-    submit.value = "edit";
-    submit.id = "edit_"+person.id;
-    form.appendChild(submit);
+    const editButton = document.createElement("input");
+    editButton.type = "button";
+    editButton.value = "edit";
+    editButton.id = "edit_"+person.id;
+    form.appendChild(editButton);
+    const deleteButton = document.createElement("input");
+    deleteButton.type = "button"; 
+    deleteButton.value = "edit";
+    deleteButton.id = "delete_"+person.id;
+    form.appendChild(deleteButton);
     li.appendChild(form);
     ul.appendChild(li);
     document.getElementById("edit_" + person.id).addEventListener("click", function (e) {
-      editSelected();
+      editReservation();
+    });
+     document.getElementById("delete_" + person.id).addEventListener("click", function (e) {
+      deleteReservation();
     });
   }
 
   function editReservation() {
+    const person = document.querySelector("#")
+  }
+
+  function deleteReservation() {
 
   }
 
