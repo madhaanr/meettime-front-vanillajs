@@ -87,11 +87,6 @@
   }
 
   function deleteReservation(person) {
-    const personFormToDelete=document.querySelector("#form_"+person.id);
-    while(personFormToDelete.firstChild) {
-      personFormToDelete.removeChild(personFormToDelete.firstChild);
-    }
-    personFormToDelete.parentElement.removeChild(personFormToDelete);
     const li=document.querySelector("#li_"+person.id)
     li.parentElement.removeChild(li);
     savedSelections.persons.pop(person);
