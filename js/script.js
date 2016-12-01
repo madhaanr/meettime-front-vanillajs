@@ -18,7 +18,7 @@
     const checkboxes = document.querySelectorAll(".selection");
     checkboxes.forEach(function (checkbox) {
       const checkboxId = checkbox.id;
-      const obj = new Object();
+      const obj = {};
       if (checkbox.checked === true) {
         obj[checkboxId] = true;
         person.selectedTimes.push(obj);
@@ -45,22 +45,20 @@
     name.type = "text";
     name.id = person.id;
     name.value = person.name;
-    form.id="form_"+person.id;
-    li.id="li_"+person.id;
+    form.id = "form_" + person.id;
+    li.id = "li_" + person.id;
     form.appendChild(name);
-    //form.id = "edit_" + person.id;
     person.selectedTimes.forEach((time, i) => {
       const label = document.createElement("label");
       label.appendChild(document.createTextNode(Object.keys(time)[0]));
-      form.appendChild(label);
+      //form.appendChild(label);
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
-      checkbox.id = timesList[i];
-      checkbox.className = person.id;
-      checkbox.name = "checkbox " + i;
+      checkbox.value = timesList[i];
+      checkbox.id = "checkbox"+person.id+"_"+i;
+      checkbox.className = "checkbox_" + person.id;
       checkbox.checked = time[Object.keys(time)[0]];
       form.appendChild(checkbox);
-      //Object.keys(time)[0] + " " + time[Object.keys(time)[0]] + " : ";
     });
     const editButton = document.createElement("input");
     editButton.type = "button";
@@ -83,17 +81,34 @@
   }
 
   function editReservation(person) {
-    console.log(person);
+    person.selectedTimes = [];
+    const checkboxes = document.querySelectorAll(".checkbox_" + person.id);
+    //console.log(checkboxes);
+    checkboxes.forEach(checkbox => {
+      const checkboxId = checkbox.id;
+      const obj = {};
+      if (checkbox.checked === true) {
+        obj[checkboxId] = true;
+        person.selectedTimes.push(obj);
+      }
+      else {
+        obj[checkboxId] = false;
+        person.selectedTimes.push(obj);
+      }
+    });
+    savedSelections.persons = savedSelections.persons.filter(p => p.id !== person.id);
+    savedSelections.persons.push(person);
+    console.log(savedSelections.persons);
   }
 
   function deleteReservation(person) {
-    const li=document.querySelector("#li_"+person.id)
+    const li = document.querySelector("#li_" + person.id)
     li.parentElement.removeChild(li);
-    savedSelections.persons=savedSelections.persons.filter(p => {
-      return p.id!==person.id;
+    savedSelections.persons = savedSelections.persons.filter(p => {
+      return p.id !== person.id;
     });
     console.log(savedSelections.persons);
-}
+  }
 
   function makeCheckBoxes() {
     const form = document.querySelector("#selectTimes");
