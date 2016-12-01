@@ -45,6 +45,8 @@
     name.type = "text";
     name.id = person.id;
     name.value = person.name;
+    form.id="form_"+person.id;
+    li.id="li_"+person.id;
     form.appendChild(name);
     //form.id = "edit_" + person.id;
     person.selectedTimes.forEach((time, i) => {
@@ -63,30 +65,38 @@
     const editButton = document.createElement("input");
     editButton.type = "button";
     editButton.value = "edit";
-    editButton.id = "edit_"+person.id;
+    editButton.id = "edit_" + person.id;
     form.appendChild(editButton);
     const deleteButton = document.createElement("input");
-    deleteButton.type = "button"; 
-    deleteButton.value = "edit";
-    deleteButton.id = "delete_"+person.id;
+    deleteButton.type = "button";
+    deleteButton.value = "delete";
+    deleteButton.id = "delete_" + person.id;
     form.appendChild(deleteButton);
     li.appendChild(form);
     ul.appendChild(li);
     document.getElementById("edit_" + person.id).addEventListener("click", function (e) {
-      editReservation();
+      editReservation(person);
     });
-     document.getElementById("delete_" + person.id).addEventListener("click", function (e) {
-      deleteReservation();
+    document.getElementById("delete_" + person.id).addEventListener("click", function (e) {
+      deleteReservation(person);
     });
   }
 
-  function editReservation() {
-    const person = document.querySelector("#")
+  function editReservation(person) {
+    console.log(person);
   }
 
-  function deleteReservation() {
-
-  }
+  function deleteReservation(person) {
+    const personFormToDelete=document.querySelector("#form_"+person.id);
+    while(personFormToDelete.firstChild) {
+      personFormToDelete.removeChild(personFormToDelete.firstChild);
+    }
+    personFormToDelete.parentElement.removeChild(personFormToDelete);
+    const li=document.querySelector("#li_"+person.id)
+    li.parentElement.removeChild(li);
+    savedSelections.persons.pop(person);
+    console.log(savedSelections.persons);
+}
 
   function makeCheckBoxes() {
     const form = document.querySelector("#selectTimes");
