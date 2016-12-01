@@ -89,7 +89,9 @@
   function deleteReservation(person) {
     const li=document.querySelector("#li_"+person.id)
     li.parentElement.removeChild(li);
-    savedSelections.persons.pop(person);
+    savedSelections.persons=savedSelections.persons.filter(p => {
+      return p.id!==person.id;
+    });
     console.log(savedSelections.persons);
 }
 
