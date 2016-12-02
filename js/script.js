@@ -42,17 +42,22 @@
     const li = document.createElement("li");
     const form = document.createElement("form");
     const name = document.createElement("input");
+    const table = document.querySelector("#reservations");
     name.type = "text";
+    if(!table) {
+      return;
+    }
     name.id = person.id;
     name.value = person.name;
     form.id = "form_" + person.id;
+    
     li.id = "li_" + person.id;
     form.appendChild(name);
     person.selectedTimes.forEach((time, i) => {
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.value = timesList[i];
-      checkbox.id = "checkbox"+person.id+"_"+i;
+      checkbox.id = "checkbox" + person.id + "_" + i;
       checkbox.className = "checkbox_" + person.id;
       checkbox.checked = time[Object.keys(time)[0]];
       form.appendChild(checkbox);
@@ -148,10 +153,20 @@
     if (!date) {
       return;
     }
-    const ul = document.querySelector("#dates");
-    const li = document.createElement("li");
-    li.appendChild(document.createTextNode(date.toLocaleDateString()+" "+date.toLocaleTimeString()));
-    ul.appendChild(li);
+    const table = document.querySelector("#reservations");
+    let tr = document.querySelector("#availableDates");
+    if(!tr) {
+      tr = document.createElement("tr");
+      tr.id = "availableDates";
+      let th = document.createElement("th");
+      th = document.createTextNode("Persons");
+      th.value="persons";
+      tr.appendChild(th);
+      table.appendChild(tr);
+    }
+    const th = document.createElement("th");
+    th.appendChild(document.createTextNode(date.toLocaleDateString()+" "+date.toLocaleTimeString())); 
+    tr.appendChild(th);
   }
 
   function clearInputFields(checkboxes) {
@@ -162,9 +177,9 @@
   }
 
   function randomId() {
-    return "e"+Math.random().toString(36).substr(2, 10);
+    return "e" + Math.random().toString(36).substr(2, 10);
   }
-  
+
   document.addEventListener("DOMContentLoaded", function (e) {
     listDates();
     makeCheckBoxes();
