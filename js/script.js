@@ -12,7 +12,7 @@
   let savedSelections = { "persons": [] };
 
   function saveSelections() {
-    const personId = "a" + randomId();
+    const personId = randomId();
     const name = document.querySelector("#name").value;
     const person = { "id": personId, "name": name, "selectedTimes": [] };
     const checkboxes = document.querySelectorAll(".selection");
@@ -49,9 +49,6 @@
     li.id = "li_" + person.id;
     form.appendChild(name);
     person.selectedTimes.forEach((time, i) => {
-      const label = document.createElement("label");
-      label.appendChild(document.createTextNode(Object.keys(time)[0]));
-      //form.appendChild(label);
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.value = timesList[i];
@@ -83,7 +80,6 @@
   function editReservation(person) {
     person.selectedTimes = [];
     const checkboxes = document.querySelectorAll(".checkbox_" + person.id);
-    //console.log(checkboxes);
     checkboxes.forEach(checkbox => {
       const checkboxId = checkbox.id;
       const obj = {};
@@ -98,7 +94,6 @@
     });
     savedSelections.persons = savedSelections.persons.filter(p => p.id !== person.id);
     savedSelections.persons.push(person);
-    console.log(savedSelections.persons);
   }
 
   function deleteReservation(person) {
@@ -107,7 +102,6 @@
     savedSelections.persons = savedSelections.persons.filter(p => {
       return p.id !== person.id;
     });
-    console.log(savedSelections.persons);
   }
 
   function makeCheckBoxes() {
@@ -156,7 +150,7 @@
     }
     const ul = document.querySelector("#dates");
     const li = document.createElement("li");
-    li.appendChild(document.createTextNode(date.toLocaleDateString() + " " + date.toLocaleTimeString()));
+    li.appendChild(document.createTextNode(date.toLocaleDateString()+" "+date.toLocaleTimeString()));
     ul.appendChild(li);
   }
 
@@ -168,9 +162,9 @@
   }
 
   function randomId() {
-    return Math.random().toString(36).substr(2, 10);
+    return "e"+Math.random().toString(36).substr(2, 10);
   }
-  //event listeners
+  
   document.addEventListener("DOMContentLoaded", function (e) {
     listDates();
     makeCheckBoxes();
