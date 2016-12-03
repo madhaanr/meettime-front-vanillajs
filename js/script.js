@@ -42,45 +42,46 @@
     const form = document.createElement("form");
     form.className="tr";
     const name = document.createElement("input");
-    const spanTd=document.createElement("span");
-    spanTd.className="td";
+    const td=document.createElement("div");
+    td.className="td";
     if(!table) {
       return;
     }
     name.type = "text";
     name.id = person.id;
     name.value = person.name;
+    name.className="td";
     form.id = "form_" + person.id;
-    spanTd.appendChild(name);
-    form.appendChild(spanTd);
+    td.appendChild(name);
+    form.appendChild(td);
     person.selectedTimes.forEach((time, i) => {
-      const spanTd2 = document.createElement("span");
-      spanTd2.className="td";
+      const td2 = document.createElement("div");
+      td2.className="td";
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.value = timesList[i];
       checkbox.id = "checkbox" + person.id + "_" + i;
       checkbox.className = "checkbox_" + person.id;
       checkbox.checked = time[Object.keys(time)[0]];
-      spanTd2.appendChild(checkbox);
-      form.appendChild(spanTd2);
+      td2.appendChild(checkbox);
+      form.appendChild(td2);
     });
     const editButton = document.createElement("input");
     editButton.type = "button";
     editButton.value = "edit";
     editButton.id = "edit_" + person.id;
-    const spanTd3=document.createElement("span");
-    spanTd3.className="td";
-    spanTd3.appendChild(editButton);
-    form.appendChild(spanTd3);
+    const td3=document.createElement("div");
+    td3.className="td";
+    td3.appendChild(editButton);
+    form.appendChild(td3);
     const deleteButton = document.createElement("input");
     deleteButton.type = "button";
     deleteButton.value = "delete";
     deleteButton.id = "delete_" + person.id;
-    const spanTd4=document.createElement("span");
-    spanTd4.className="td";
-    spanTd4.appendChild(deleteButton);
-    form.appendChild(spanTd4);
+    const td4=document.createElement("div");
+    td4.className="td";
+    td4.appendChild(deleteButton);
+    form.appendChild(td4);
     table.appendChild(form);
     document.getElementById("edit_" + person.id).addEventListener("click", function (e) {
       editReservation(person);
@@ -110,8 +111,8 @@
   }
 
   function deleteReservation(person) {
-    const li = document.querySelector("#li_" + person.id)
-    li.parentElement.removeChild(li);
+    const form = document.querySelector("#form_" + person.id)
+    form.parentElement.removeChild(form);
     savedSelections.persons = savedSelections.persons.filter(p => {
       return p.id !== person.id;
     });
@@ -148,14 +149,14 @@
     //ugly hack to get extra th cells so edit and delete button 
     //have space in table
     const table = document.querySelector(".table");
-    let spanTr = document.querySelector("#availableDates");
-    const spanTh = document.createElement("span");
-    spanTh.className="th";
-    const spanTh2 = document.createElement("span");
-    spanTh2.className="th";
-    spanTr.appendChild(spanTh);
-    spanTr.appendChild(spanTh2);
-    table.appendChild(spanTr);
+    let tr = document.querySelector("#availableDates");
+    const th = document.createElement("div");
+    th.className="th";
+    const th2 = document.createElement("div");
+    th2.className="th";
+    tr.appendChild(th);
+    tr.appendChild(th2);
+    table.appendChild(tr);
   }
 
   function addDate() {
@@ -173,23 +174,23 @@
       return;
     }
     const table = document.querySelector(".table");
-    let spanTr = document.querySelector("#availableDates");
-    if(!spanTr) {
-      spanTr = document.createElement("span");
-      spanTr.id = "availableDates";
-      spanTr.className = "tr";
-      const spanTh = document.createElement("span");
-      spanTh.appendChild(document.createTextNode("Persons"));
-      spanTh.value="persons";
-      spanTh.className="th"
-      spanTr.appendChild(spanTh);
-      table.appendChild(spanTr);
+    let tr = document.querySelector("#availableDates");
+    if(!tr) {
+      tr = document.createElement("div");
+      tr.id = "availableDates";
+      tr.className = "tr";
+      const th = document.createElement("div");
+      th.appendChild(document.createTextNode("Persons"));
+      th.value="persons";
+      th.className="th"
+      tr.appendChild(th);
+      table.appendChild(tr);
     }
-    const spanTh = document.createElement("span");
-    spanTh.className="th";
-    spanTh.appendChild(document.createTextNode(date.toLocaleDateString()+" "+date.toLocaleTimeString())); 
-    spanTr.appendChild(spanTh);
-    table.appendChild(spanTr);
+    const th = document.createElement("div");
+    th.className="th";
+    th.appendChild(document.createTextNode(date.toLocaleDateString()+" "+date.toLocaleTimeString())); 
+    tr.appendChild(th);
+    table.appendChild(tr);
   }
 
   function clearInputFields(checkboxes) {
