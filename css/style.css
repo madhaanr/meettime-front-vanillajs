@@ -1,6 +1,7 @@
 ul {
   white-space:nowrap;
 }
+
 #dates li {
   display: inline;
   padding: 0.4em;
@@ -8,4 +9,17 @@ ul {
 
 #selectedTimes li {
   padding: 0.2em;
+}
+
+DIV.table {
+  display: table;
+}
+
+FORM.tr, DIV.tr {
+  display: table-row;
+}
+
+SPAN.td, SPAN.th {
+  display: table-cell;
+  width: 100px;
 }

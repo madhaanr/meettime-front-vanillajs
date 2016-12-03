@@ -38,42 +38,50 @@
   }
 
   function showReservation(person) {
-    const ul = document.querySelector("#selectedTimes");
-    const li = document.createElement("li");
+    const table = document.querySelector(".table");
     const form = document.createElement("form");
+    form.className="tr";
     const name = document.createElement("input");
-    const table = document.querySelector("#reservations");
-    name.type = "text";
+    const spanTd=document.createElement("span");
+    spanTd.className="td";
     if(!table) {
       return;
     }
+    name.type = "text";
     name.id = person.id;
     name.value = person.name;
     form.id = "form_" + person.id;
-    
-    li.id = "li_" + person.id;
-    form.appendChild(name);
+    spanTd.appendChild(name);
+    form.appendChild(spanTd);
     person.selectedTimes.forEach((time, i) => {
+      const spanTd2 = document.createElement("span");
+      spanTd2.className="td";
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.value = timesList[i];
       checkbox.id = "checkbox" + person.id + "_" + i;
       checkbox.className = "checkbox_" + person.id;
       checkbox.checked = time[Object.keys(time)[0]];
-      form.appendChild(checkbox);
+      spanTd2.appendChild(checkbox);
+      form.appendChild(spanTd2);
     });
     const editButton = document.createElement("input");
     editButton.type = "button";
     editButton.value = "edit";
     editButton.id = "edit_" + person.id;
-    form.appendChild(editButton);
+    const spanTd3=document.createElement("span");
+    spanTd3.className="td";
+    spanTd3.appendChild(editButton);
+    form.appendChild(spanTd3);
     const deleteButton = document.createElement("input");
     deleteButton.type = "button";
     deleteButton.value = "delete";
     deleteButton.id = "delete_" + person.id;
-    form.appendChild(deleteButton);
-    li.appendChild(form);
-    ul.appendChild(li);
+    const spanTd4=document.createElement("span");
+    spanTd4.className="td";
+    spanTd4.appendChild(deleteButton);
+    form.appendChild(spanTd4);
+    table.appendChild(form);
     document.getElementById("edit_" + person.id).addEventListener("click", function (e) {
       editReservation(person);
     });
@@ -137,6 +145,17 @@
     timesList.forEach(function (date) {
       addDateToList(date)
     }, this);
+    //ugly hack to get extra th cells so edit and delete button 
+    //have space in table
+    const table = document.querySelector(".table");
+    let spanTr = document.querySelector("#availableDates");
+    const spanTh = document.createElement("span");
+    spanTh.className="th";
+    const spanTh2 = document.createElement("span");
+    spanTh2.className="th";
+    spanTr.appendChild(spanTh);
+    spanTr.appendChild(spanTh2);
+    table.appendChild(spanTr);
   }
 
   function addDate() {
@@ -153,20 +172,24 @@
     if (!date) {
       return;
     }
-    const table = document.querySelector("#reservations");
-    let tr = document.querySelector("#availableDates");
-    if(!tr) {
-      tr = document.createElement("tr");
-      tr.id = "availableDates";
-      let th = document.createElement("th");
-      th = document.createTextNode("Persons");
-      th.value="persons";
-      tr.appendChild(th);
-      table.appendChild(tr);
+    const table = document.querySelector(".table");
+    let spanTr = document.querySelector("#availableDates");
+    if(!spanTr) {
+      spanTr = document.createElement("span");
+      spanTr.id = "availableDates";
+      spanTr.className = "tr";
+      const spanTh = document.createElement("span");
+      spanTh.appendChild(document.createTextNode("Persons"));
+      spanTh.value="persons";
+      spanTh.className="th"
+      spanTr.appendChild(spanTh);
+      table.appendChild(spanTr);
     }
-    const th = document.createElement("th");
-    th.appendChild(document.createTextNode(date.toLocaleDateString()+" "+date.toLocaleTimeString())); 
-    tr.appendChild(th);
+    const spanTh = document.createElement("span");
+    spanTh.className="th";
+    spanTh.appendChild(document.createTextNode(date.toLocaleDateString()+" "+date.toLocaleTimeString())); 
+    spanTr.appendChild(spanTh);
+    table.appendChild(spanTr);
   }
 
   function clearInputFields(checkboxes) {
