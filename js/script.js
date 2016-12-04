@@ -34,45 +34,28 @@
 
   function addReservationToPage(person) {
     const table = document.querySelector(".table");
-    const form = document.createElement("form");
-    form.className = "tr";
-    const name = document.createElement("input");
-    const td = document.createElement("div");
-    td.className = "td";
-    if (!table) {
-      return;
-    }
-    name.type = "text";
-    name.id = person.id;
-    name.value = person.name;
-    name.className = "td";
+    let form = createElement("form", "tr");
     form.id = "form_" + person.id;
+    const name = createNameInput(person);
+    let td = createElement("div", "td");
     td.appendChild(name);
     form.appendChild(td);
-    const td3 = document.createElement("div");
-    const editButton = document.createElement("input");
-    editButton.type = "button";
-    editButton.value = "edit";
-    editButton.id = "edit_" + person.id;
-    td3.className = "td";
-    td3.appendChild(editButton);
-    const deleteButton = document.createElement("input");
-    deleteButton.type = "button";
-    deleteButton.value = "delete";
-    deleteButton.id = "delete_" + person.id;
-    td3.appendChild(deleteButton);
-    form.appendChild(td3);
+    td = createElement("div", "td");
+    const editButton = createButton("edit", person.id);
+    td.appendChild(editButton);
+    const deleteButton = createButton("delete", person.id);
+    td.appendChild(deleteButton);
+    form.appendChild(td);
     person.selectedTimes.forEach((time, i) => {
-      const td2 = document.createElement("div");
-      td2.className = "td";
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.value = timesList[i];
-      checkbox.id = "checkbox" + person.id + "_" + i;
-      checkbox.className = "checkbox_" + person.id;
+      checkbox.id = "checkbox_" + person.id + "_" + i;
+      checkbox.className = "checkbox";
       checkbox.checked = time[Object.keys(time)[0]];
-      td2.appendChild(checkbox);
-      form.appendChild(td2);
+      td = createElement("div", "td");
+      td.appendChild(checkbox);
+      form.appendChild(td);
     });
     table.appendChild(form);
     document.getElementById("edit_" + person.id).addEventListener("click", function (e) {
@@ -81,6 +64,34 @@
     document.getElementById("delete_" + person.id).addEventListener("click", function (e) {
       deleteReservation(person);
     });
+  }
+
+  function createElement(elementName, className) {
+    const element = document.createElement(elementName);
+    element.className = className;
+    return element;
+  }
+
+  function createButton(buttonName, personId) {
+    const button = document.createElement("input");
+    button.type = "button";
+    button.value = buttonName;
+    button.id = buttonName + "_" + personId;
+    return button;
+  }
+
+  function createNameInput(person) {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.className = "td";
+    if (!person) {
+      input.id = "name";
+      input.value = "";
+    } else {
+      input.id = person.name;
+      input.value = person.name;
+    }
+    return input;
   }
 
   function editReservation(person) {
@@ -106,12 +117,7 @@
 
   function createCheckBoxesToPage() {
     const form = document.querySelector("#selectTimes");
-    if (!form) {
-      return;
-    }
-    const name = document.createElement("input");
-    name.type = "text";
-    name.id = "name";
+    const name = createNameInput();
     form.appendChild(name);
     for (let i = 0; i < timesList.length; ++i) {
       const checkbox = document.createElement("input");
@@ -121,9 +127,7 @@
       checkbox.name = "checkbox " + i;
       form.appendChild(checkbox);
     }
-    const submit = document.createElement("input");
-    submit.type = "button";
-    submit.value = "save";
+    const submit = createButton("save");
     submit.id = "saveSelected";
     form.appendChild(submit);
   }
@@ -159,22 +163,18 @@
     const table = document.querySelector(".table");
     let tr = document.querySelector("#availableDates");
     if (!tr) {
-      tr = document.createElement("div");
+      tr = createElement("div", "tr");
       tr.id = "availableDates";
-      tr.className = "tr";
-      const th = document.createElement("div");
+      let th = createElement("div", "th");
       th.appendChild(document.createTextNode("Persons"));
       th.value = "persons";
-      th.className = "th"
       tr.appendChild(th);
-      const th2 = document.createElement("div");
-      th2.className = "th";
-      tr.appendChild(th2);
+      th = createElement("div", "th");
+      tr.appendChild(th);
       table.appendChild(tr);
     }
-    const th = document.createElement("div");
-    th.className = "th";
-    const br=document.createElement("br");
+    const th = createElement("div", "th")
+    const br = document.createElement("br");
     th.appendChild(document.createTextNode(date.toLocaleDateString()));
     th.appendChild(br);
     th.appendChild(document.createTextNode(date.toLocaleTimeString()));
