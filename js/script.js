@@ -138,10 +138,7 @@
     let tr = document.querySelector("#availableDates");
     const th = document.createElement("div");
     th.className = "th";
-    const th2 = document.createElement("div");
-    th2.className = "th";
     tr.appendChild(th);
-    tr.appendChild(th2);
     table.appendChild(tr);
   }
 
@@ -170,11 +167,17 @@
       th.value = "persons";
       th.className = "th"
       tr.appendChild(th);
+      const th2 = document.createElement("div");
+      th2.className = "th";
+      tr.appendChild(th2);
       table.appendChild(tr);
     }
     const th = document.createElement("div");
     th.className = "th";
-    th.appendChild(document.createTextNode(date.toLocaleDateString() + " " + date.toLocaleTimeString()));
+    const br=document.createElement("br");
+    th.appendChild(document.createTextNode(date.toLocaleDateString()));
+    th.appendChild(br);
+    th.appendChild(document.createTextNode(date.toLocaleTimeString()));
     tr.appendChild(th);
     table.appendChild(tr);
   }

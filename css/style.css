@@ -22,5 +22,7 @@ FORM.tr, DIV.tr {
 
 DIV.td, DIV.th {
   display: table-cell;
-  padding: 5px;
+  padding: 1px;
+  min-width: 160px;
+  min-height: 1px;
 }
