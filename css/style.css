@@ -17,10 +17,10 @@ DIV.table {
 
 FORM.tr, DIV.tr {
   display: table-row;
-   white-space:nowrap;
+  white-space: nowrap;
 }
 
 DIV.td, DIV.th {
   display: table-cell;
-  padding: 2px;
+  padding: 5px;
 }
