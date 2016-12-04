@@ -14,32 +14,25 @@
   function savePersonAndReservations() {
     const personId = randomId();
     const name = document.querySelector("#name").value;
-    if(!name) {
-      return
+    if (!name) {
+      return;
     }
     const person = { "id": personId, "name": name, "selectedTimes": [] };
     const checkboxes = document.querySelectorAll(".selection");
     checkboxes.forEach(function (checkbox) {
-      const checkboxId = checkbox.id;
       const obj = {};
-      if (checkbox.checked) {
-        obj[checkboxId] = true;
-      }
-      else {
-        obj[checkboxId] = false;
-      }
+      obj[checkbox.id] = checkbox.checked;
       person.selectedTimes.push(obj);
     }, this);
-
     savedSelections.persons = savedSelections.persons.filter(person => person.id !== personId);
     savedSelections.persons.push(person);
 
     console.log(savedSelections.persons);
     clearInputFields(checkboxes);
-    showReservation(person);
+    addReservationToPage(person);
   }
 
-  function showReservation(person) {
+  function addReservationToPage(person) {
     const table = document.querySelector(".table");
     const form = document.createElement("form");
     form.className = "tr";
@@ -56,14 +49,13 @@
     form.id = "form_" + person.id;
     td.appendChild(name);
     form.appendChild(td);
+    const td3 = document.createElement("div");
     const editButton = document.createElement("input");
     editButton.type = "button";
     editButton.value = "edit";
     editButton.id = "edit_" + person.id;
-    const td3 = document.createElement("div");
     td3.className = "td";
     td3.appendChild(editButton);
-    form.appendChild(td3);
     const deleteButton = document.createElement("input");
     deleteButton.type = "button";
     deleteButton.value = "delete";
@@ -95,16 +87,10 @@
     person.selectedTimes = [];
     const checkboxes = document.querySelectorAll(".checkbox_" + person.id);
     checkboxes.forEach(checkbox => {
-      const checkboxId = checkbox.id;
       const obj = {};
-      if (checkbox.checked === true) {
-        obj[checkboxId] = true;
-        person.selectedTimes.push(obj);
-      }
-      else {
-        obj[checkboxId] = false;
-        person.selectedTimes.push(obj);
-      }
+      obj[checkbox.id] = checkbox.checked;
+      person.selectedTimes.push(obj);
+
     });
     savedSelections.persons = savedSelections.persons.filter(p => p.id !== person.id);
     savedSelections.persons.push(person);
@@ -118,7 +104,7 @@
     });
   }
 
-  function makeCheckBoxes() {
+  function createCheckBoxesToPage() {
     const form = document.querySelector("#selectTimes");
     if (!form) {
       return;
@@ -206,7 +192,7 @@
 
   document.addEventListener("DOMContentLoaded", function (e) {
     listDates();
-    makeCheckBoxes();
+    createCheckBoxesToPage();
     document.getElementById("submitDate").addEventListener("click", function (e) {
       addDate();
     });
