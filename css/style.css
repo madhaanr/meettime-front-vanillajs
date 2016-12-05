@@ -26,3 +26,6 @@ DIV.td, DIV.th {
   min-width: 160px;
   min-height: 1px;
 }
+DIV.footer {
+  display: table-footer-group;
+}

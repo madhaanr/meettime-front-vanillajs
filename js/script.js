@@ -116,20 +116,32 @@
   }
 
   function createCheckBoxesToPage() {
-    const form = document.querySelector("#selectTimes");
+    const table = document.querySelector(".table");
+    const form = createElement("div","tr")
     const name = createNameInput();
-    form.appendChild(name);
+    form.className += " footer";
+    let td=createElement("div","td");
+    td.appendChild(name);
+    form.appendChild(td);
+    const submit = createButton("save");
+    submit.id = "saveSelected";
+    td=createElement("div","td");
+    td.appendChild(submit);
+    form.appendChild(td);
     for (let i = 0; i < timesList.length; ++i) {
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.id = timesList[i];
       checkbox.className = "selection";
       checkbox.name = "checkbox " + i;
-      form.appendChild(checkbox);
+      td=createElement("div","td");
+      td.appendChild(checkbox);
+      form.appendChild(td);
     }
-    const submit = createButton("save");
-    submit.id = "saveSelected";
-    form.appendChild(submit);
+    table.appendChild(form);
+    document.getElementById("saveSelected").addEventListener("click", function (e) {
+      savePersonAndReservations();
+    });
   }
 
   function listDates() {
@@ -198,9 +210,6 @@
     createCheckBoxesToPage();
     document.getElementById("submitDate").addEventListener("click", function (e) {
       addDate();
-    });
-    document.getElementById("saveSelected").addEventListener("click", function (e) {
-      savePersonAndReservations();
     });
   });
 })();
