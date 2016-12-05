@@ -1,16 +1,3 @@
-ul {
-  white-space:nowrap;
-}
-
-#dates li {
-  display: inline;
-  padding: 0.4em;
-}
-
-#selectedTimes li {
-  padding: 0.2em;
-}
-
 DIV.table {
   display: table;
 }

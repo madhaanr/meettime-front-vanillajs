@@ -115,17 +115,17 @@
     });
   }
 
-  function createCheckBoxesToPage() {
+  function createAddReservationForm() {
     const table = document.querySelector(".table");
-    const form = createElement("div","tr")
+    const form = createElement("div", "tr")
     const name = createNameInput();
     form.className += " footer";
-    let td=createElement("div","td");
+    let td = createElement("div", "td");
     td.appendChild(name);
     form.appendChild(td);
     const submit = createButton("save");
-    submit.id = "saveSelected";
-    td=createElement("div","td");
+    submit.id = "saveReservation";
+    td = createElement("div", "td");
     td.appendChild(submit);
     form.appendChild(td);
     for (let i = 0; i < timesList.length; ++i) {
@@ -134,14 +134,11 @@
       checkbox.id = timesList[i];
       checkbox.className = "selection";
       checkbox.name = "checkbox " + i;
-      td=createElement("div","td");
+      td = createElement("div", "td");
       td.appendChild(checkbox);
       form.appendChild(td);
     }
     table.appendChild(form);
-    document.getElementById("saveSelected").addEventListener("click", function (e) {
-      savePersonAndReservations();
-    });
   }
 
   function listDates() {
@@ -207,9 +204,12 @@
 
   document.addEventListener("DOMContentLoaded", function (e) {
     listDates();
-    createCheckBoxesToPage();
+    createAddReservationForm();
     document.getElementById("submitDate").addEventListener("click", function (e) {
       addDate();
+    });
+    document.getElementById("saveReservation").addEventListener("click", function (e) {
+      savePersonAndReservations();
     });
   });
 })();
