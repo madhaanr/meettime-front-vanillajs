@@ -33,12 +33,13 @@
   }
 
   function addReservationToPage(person) {
-    const table = document.querySelector(".table");
-    let form = createElement("form", "tr");
-    form.id = "form_" + person.id;
-    const name = createNameInput(person);
+    let name = createNameInput(person);
+    console.log(name);
+    console.log(person);
     let td = createElement("div", "td");
     td.appendChild(name);
+    const form = createElement("form", "tr");
+    form.id = "form_" + person.id;
     form.appendChild(td);
     td = createElement("div", "td");
     const editButton = createButton("edit", person.id);
@@ -57,6 +58,7 @@
       td.appendChild(checkbox);
       form.appendChild(td);
     });
+    const table = document.querySelector(".table");
     table.appendChild(form);
     document.getElementById("edit_" + person.id).addEventListener("click", function (e) {
       editReservation(person);
@@ -86,11 +88,13 @@
     input.className = "td";
     if (!person) {
       input.id = "name";
-      input.value = "";
+      input.name = "name";
     } else {
-      input.id = person.name;
+      input.id = person.id;
+      input.name = person.name;
       input.value = person.name;
     }
+    console.log(input);
     return input;
   }
 
@@ -101,7 +105,6 @@
       const obj = {};
       obj[checkbox.id] = checkbox.checked;
       person.selectedTimes.push(obj);
-
     });
     savedSelections.persons = savedSelections.persons.filter(p => p.id !== person.id);
     savedSelections.persons.push(person);
